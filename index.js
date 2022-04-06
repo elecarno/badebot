@@ -137,7 +137,7 @@ config.client.on("message", message => {
                 let toxicity = badeness*uData.amount-(uData.abade*uData.amount)
                 data.push([toxicity, i])
                 stat = "toxicity"
-                stat = "toxicity"
+                antistat = "toxicity"
                 invert = 1
             } else {
                 let badeness = uData.bade - uData.abade

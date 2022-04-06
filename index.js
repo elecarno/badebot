@@ -10,6 +10,20 @@ config.client.once("ready", () => {
 config.client.on("message", message => { 
     if(message.author.bot) return
 
+    if(config.client.userData[message.author.id] === undefined)
+        config.client.commands.get("enter").execute(message.author)
+
+    if(message.content.includes("lol"))
+        config.client.userData[message.author.id].lol += 1
+    if(message.content.includes("lmao"))
+        config.client.userData[message.author.id].lmao += 1
+    if(message.content.includes("xd"))
+        config.client.userData[message.author.id].xd += 1
+    if(message.content.includes("gg"))
+        config.client.userData[message.author.id].gg += 1
+    if(message.content.includes("bruh"))
+        config.client.userData[message.author.id].bruh += 1
+
     let mID
     if(message.mentions.users.first() !== undefined)
         mID = message.mentions.users.first()
@@ -24,10 +38,7 @@ config.client.on("message", message => {
 
     let given = false
     if (message.content.includes("bade")){ 
-        if(config.client.userData[message.author.id] === undefined)
-            config.client.commands.get("enter").execute(message.author)
-
-        if(mID !== undefined){
+        if(mID !== undefined && mID.id !== message.author.id){
             if(config.client.userData[mID.id] === undefined)
                 config.client.commands.get("enter").execute(mID)
 
@@ -51,9 +62,6 @@ config.client.on("message", message => {
             let messages = Array.from(messageMappings.values());
             let previousMessage = messages[1];
             if(previousMessage.author.id === message.author.id || given ) return
-
-            if(config.client.userData[previousMessage.author.id] === undefined)
-                config.client.commands.get("enter").execute(mID)
 
             if (message.content.includes("antibade") || message.content.includes("unbade")){
                 config.client.userData[previousMessage.author.id].abade += modifier
@@ -98,6 +106,8 @@ config.client.on("message", message => {
         .setTitle(data.name + " (" + title + ")")
         newEmbed.addField(stat + ": " + badeness*invert, "bades: " + data.bade + "\nantibades: " + data.abade)
         newEmbed.addField("toxicity score: " + toxicity, "spoketh: " + data.amount)
+        newEmbed.addField("word tracker: ", "lol: " + data.lol + "\nlmao: " + data.lmao
+        + "\nxd: " + data.xd + "\ngg: " + data.gg + "\nbruh: " + data.bruh)
         message.channel.send(newEmbed)
     }
     else if (command === "top"){

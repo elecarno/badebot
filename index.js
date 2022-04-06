@@ -79,16 +79,25 @@ config.client.on("message", message => {
             data = config.client.userData[message.author.id]
 
         let badeness = data.bade - data.abade
+        let toxicity = badeness*data.amount-(data.abade*data.amount)
         for(var i in config.titles){
             if(badeness >= config.titles[i]){
                 title = i
             }
         }
 
+        let stat = "badeness"
+        let invert = 1
+        if(badeness < 0){
+            stat = "antibadeness"
+            invert = -1
+        }
+
         const newEmbed = new Discord.MessageEmbed()
         .setColor("#e0a73d")
         .setTitle(data.name + " (" + title + ")")
-        newEmbed.addField("badeness: " + badeness, "bades: " + data.bade + "\nantibades: " + data.abade + "\nspoketh: " + data.amount)
+        newEmbed.addField(stat + ": " + badeness*invert, "bades: " + data.bade + "\nantibades: " + data.abade)
+        newEmbed.addField("toxicity score: " + toxicity, "spoketh: " + data.amount)
         message.channel.send(newEmbed)
     }
     else if (command === "top"){
@@ -96,6 +105,7 @@ config.client.on("message", message => {
         let stat = "badeness"
         let antistat = "antibadeness"
         let threshold = 0
+        let invert = -1
 
         for(var i in config.client.userData){
             let uData = config.client.userData[i]
@@ -104,6 +114,7 @@ config.client.on("message", message => {
                 stat = "screameth"
                 antistat = "shushteth"
                 threshold = 30
+                invert = 1
             } else {
                 let badeness = uData.bade - uData.abade
                 data.push([badeness, i])
@@ -123,7 +134,7 @@ config.client.on("message", message => {
             if(sorted[i][0] >= threshold)
                 newEmbed.addField( index + ". " + config.client.userData[sorted[i][1]].name, stat + ": " + sorted[i][0])
             else
-                newEmbed.addField( index + ". " + config.client.userData[sorted[i][1]].name, antistat + ": " + sorted[i][0])
+                newEmbed.addField( index + ". " + config.client.userData[sorted[i][1]].name, antistat + ": " + sorted[i][0]*invert)
             index++
         }
         message.channel.send(newEmbed)

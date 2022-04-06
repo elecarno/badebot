@@ -133,6 +133,7 @@ config.client.on("message", message => {
                 threshold = 30
                 invert = 1
             } else if(args[0] === "toxic"){
+                let badeness = uData.bade - uData.abade
                 let toxicity = badeness*uData.amount-(uData.abade*uData.amount)
                 data.push([toxicity, i])
                 stat = "toxicity"

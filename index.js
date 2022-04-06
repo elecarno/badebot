@@ -38,7 +38,9 @@ config.client.on("message", message => {
 
     let given = false
     if (message.content.includes("bade")){ 
-        if(mID !== undefined && mID.id !== message.author.id){
+        if(mID !== undefined){
+            if(mID.id !== message.author.id) return
+            
             if(config.client.userData[mID.id] === undefined)
                 config.client.commands.get("enter").execute(mID)
 

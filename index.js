@@ -132,6 +132,12 @@ config.client.on("message", message => {
                 antistat = "shushteth"
                 threshold = 30
                 invert = 1
+            } else if(args[0] === "toxic"){
+                let toxicity = badeness*uData.amount-(uData.abade*uData.amount)
+                data.push([toxicity, i])
+                stat = "toxicity"
+                stat = "toxicity"
+                invert = 1
             } else {
                 let badeness = uData.bade - uData.abade
                 data.push([badeness, i])

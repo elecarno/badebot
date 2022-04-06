@@ -15,8 +15,9 @@ for(const file of commandFiles){
     client.commands.set(command.name, command)
 }
 
-exports.titles = { "greatly antibade":-50, "truly antibade": -25, "slightly antibade": -1, 
-"true neutral":0, "slightly bade":1, "getting bade": 7}
+exports.titles = { "antibade blooded":-100, "greatly antibade":-50, "truly antibade": -25, "slightly antibade": -1, 
+"true neutral":0, "slightly bade":1, "getting bade": 7, "truly bade":25, "greatly bade":50,
+"bade blooded": 100}
 
 exports.client = client
 exports.prefix = prefix

@@ -13,15 +13,15 @@ config.client.on("message", message => {
     if(config.client.userData[message.author.id] === undefined)
         config.client.commands.get("enter").execute(message.author)
 
-    if(message.content.includes("lol"))
+    if(message.content.includes("lol") || message.content.includes("lel"))
         config.client.userData[message.author.id].lol += 1
-    if(message.content.includes("lmao"))
+    if(message.content.includes("lmao") || message.content.includes("lmfao"))
         config.client.userData[message.author.id].lmao += 1
     if(message.content.includes("xd"))
         config.client.userData[message.author.id].xd += 1
     if(message.content.includes("gg"))
         config.client.userData[message.author.id].gg += 1
-    if(message.content.includes("bruh"))
+    if(message.content.includes("bruh") || message.content.includes("bruh"))
         config.client.userData[message.author.id].bruh += 1
 
     let mID
@@ -62,6 +62,9 @@ config.client.on("message", message => {
             let messages = Array.from(messageMappings.values());
             let previousMessage = messages[1];
             if(previousMessage.author.id === message.author.id || given ) return
+
+            if(config.client.userData[mID.id] === undefined)
+                config.client.commands.get("enter").execute(mID)
 
             if (message.content.includes("antibade") || message.content.includes("unbade")){
                 config.client.userData[previousMessage.author.id].abade += modifier

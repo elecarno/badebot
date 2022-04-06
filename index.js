@@ -56,17 +56,15 @@ config.client.on("message", message => {
 
         config.client.userData[message.author.id].amount += 1
 
-        fs.writeFile("./user-data.json", JSON.stringify(config.client.userData, null, 4), err => {
-            if (err) throw err
-        })
-
         message.channel.messages.fetch({limit: 2}).then(messageMappings => {
             let messages = Array.from(messageMappings.values());
             let previousMessage = messages[1];
             if(previousMessage.author.id === message.author.id || given ) return
 
-            if(config.client.userData[mID.id] === undefined)
-                config.client.commands.get("enter").execute(mID)
+            if(mID !== undefined){
+                if(config.client.userData[mID.id] === undefined)
+                    config.client.commands.get("enter").execute(mID)
+            }
 
             if (message.content.includes("antibade") || message.content.includes("unbade")){
                 config.client.userData[previousMessage.author.id].abade += modifier
@@ -77,6 +75,10 @@ config.client.on("message", message => {
             }
         })
         .catch(error => console.log(error))
+
+        fs.writeFile("./user-data.json", JSON.stringify(config.client.userData, null, 4), err => {
+            if (err) throw err
+        })
     }
 
     if (!message.content.startsWith(config.prefix)) return
